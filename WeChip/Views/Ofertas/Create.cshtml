@@ -1,0 +1,104 @@
+﻿@model WeChip.Models.Oferta
+
+@{
+    ViewData["Title"] = "Create";
+
+    Cliente cliente = ViewBag.Cliente as Cliente;
+}
+
+<h1>Create</h1>
+
+<h4>Oferta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!--   CLIENTE  -->
+            <div class="form-group">
+                <label asp-for="Cliente.Nome" class="control-label"></label>
+                <input asp-for="Cliente.Nome" class="form-control" value="@cliente.Nome" required/>
+                <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cliente.Cpf" class="control-label"></label>
+                <input asp-for="Cliente.Cpf" class="form-control" value="@cliente.Cpf" />
+                <span asp-validation-for="Cliente.Cpf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cliente.Telefone" class="control-label"></label>
+                <input asp-for="Cliente.Telefone" class="form-control" value="@cliente.Telefone" required/>
+                <span asp-validation-for="Cliente.Telefone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cliente.Credito" class="control-label"></label>
+                <input asp-for="Cliente.Credito" class="form-control" value="@cliente.Credito" readonly/>
+                <span asp-validation-for="Cliente.Credito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cliente.Status.Descricao" class="control-label"></label>
+                <input asp-for="Cliente.Status.Descricao" class="form-control" value="@cliente.Status.Descricao" readonly/>
+                <span asp-validation-for="Cliente.Status.Descricao" class="text-danger"></span>
+            </div>
+            <!--  ENDEREÇO DE ENTREGA  -->
+            <div class="form-group">
+                <label asp-for="Cep" class="control-label"></label>
+                <input asp-for="Cep" class="form-control" />
+                <span asp-validation-for="Cep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rua" class="control-label"></label>
+                <input asp-for="Rua" class="form-control" />
+                <span asp-validation-for="Rua" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+                <input asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complemento" class="control-label"></label>
+                <input asp-for="Complemento" class="form-control" />
+                <span asp-validation-for="Complemento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bairro" class="control-label"></label>
+                <input asp-for="Bairro" class="form-control" />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cidade" class="control-label"></label>
+                <input asp-for="Cidade" class="form-control" />
+                <span asp-validation-for="Cidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <!--  PRODUTO  -->
+            @foreach (var produto in ViewBag.Produtos)
+            {
+                <div class="form-check">
+                    <input asp-for="Produtos" type="radio" value="@produto.CodigoProduto" class="form-check-input" required/> @produto.Descricao @produto.Preco @produto.Tipo
+                </div>
+            }
+            <!--  STATUS  -->
+            <div class="form-group">
+                <select asp-for="Status" asp-items="@ViewBag.Status"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
