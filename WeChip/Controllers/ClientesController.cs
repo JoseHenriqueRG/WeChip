@@ -20,9 +20,18 @@ namespace WeChip.Controllers
         }
 
         // GET: Ofertas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filtro)
         {
-            return View(await _context.Cliente.ToListAsync());
+            var clientes = from c in _context.Cliente
+                           where c.Status.FinalizaCliente == false
+                         select c;
+
+            if (!String.IsNullOrEmpty(filtro))
+            {
+                clientes = clientes.Where(c => c.Nome!.Contains(filtro));
+            }
+
+            return View(await clientes.Include(c => c.Status).Take(50).ToListAsync());
         }
 
         // GET: Clientes/Create
@@ -40,6 +49,7 @@ namespace WeChip.Controllers
         {
             if (ModelState.IsValid)
             {
+                cliente.Status = _context.Status.Where(s => s.Descricao == "Nome Disponível").FirstOrDefault();
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

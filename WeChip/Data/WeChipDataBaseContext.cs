@@ -16,5 +16,6 @@ namespace WeChip.Data
         public DbSet<WeChip.Models.Produto> Produto { get; set; }
         
         public DbSet<WeChip.Models.Status> Status { get; set; }
+
     }
 }

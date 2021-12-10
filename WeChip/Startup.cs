@@ -28,7 +28,7 @@ namespace WeChip
             services.AddControllersWithViews();
 
             services.AddDbContext<WeChipDataBaseContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("WeChipDataBaseContext")));
+                    options.UseSqlite(Configuration.GetConnectionString("WeChipDataBaseContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +55,7 @@ namespace WeChip
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Ofertas}/{action=Index}/{id?}");
+                    pattern: "{controller=Clientes}/{action=Index}/{id?}");
             });
         }
     }
