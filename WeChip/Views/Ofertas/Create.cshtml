@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Create";
 
-    Cliente cliente = ViewBag.Cliente as Cliente;
+    var cliente = ViewBag.Cliente as Cliente;
+
+    var status = new Status();
 }
 
 <h1>Create</h1>
@@ -16,9 +18,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <!--   CLIENTE  -->
+            <input asp-for="Cliente.ID" type="hidden" value="@cliente.ID" />
             <div class="form-group">
                 <label asp-for="Cliente.Nome" class="control-label"></label>
-                <input asp-for="Cliente.Nome" class="form-control" value="@cliente.Nome" required/>
+                <input asp-for="Cliente.Nome" class="form-control" value="@cliente.Nome" required />
                 <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -28,17 +31,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cliente.Telefone" class="control-label"></label>
-                <input asp-for="Cliente.Telefone" class="form-control" value="@cliente.Telefone" required/>
+                <input asp-for="Cliente.Telefone" class="form-control" value="@cliente.Telefone" required />
                 <span asp-validation-for="Cliente.Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cliente.Credito" class="control-label"></label>
-                <input asp-for="Cliente.Credito" class="form-control" value="@cliente.Credito" readonly/>
+                <input asp-for="Cliente.Credito" class="form-control" step="0.01" type="number" value="@cliente.Credito" readonly />
                 <span asp-validation-for="Cliente.Credito" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cliente.Status.Descricao" class="control-label"></label>
-                <input asp-for="Cliente.Status.Descricao" class="form-control" value="@cliente.Status.Descricao" readonly/>
+                <input asp-for="Cliente.Status.Descricao" class="form-control" value="@cliente.Status.Descricao" readonly />
                 <span asp-validation-for="Cliente.Status.Descricao" class="text-danger"></span>
             </div>
             <!--  ENDEREÇO DE ENTREGA  -->
@@ -78,15 +81,14 @@
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <!--  PRODUTO  -->
-            @foreach (var produto in ViewBag.Produtos)
-            {
-                <div class="form-check">
-                    <input asp-for="Produtos" type="radio" value="@produto.CodigoProduto" class="form-check-input" required/> @produto.Descricao @produto.Preco @produto.Tipo
-                </div>
-            }
+            <div class="form-group">
+                <label for="Produtos">Produtos</label>
+                <select asp-for="Produtos" asp-items="@ViewBag.Produtos" name="Produtos" class="form-control" multiple></select>
+            </div>
             <!--  STATUS  -->
             <div class="form-group">
-                <select asp-for="Status" asp-items="@ViewBag.Status"></select>
+                <label for="Status">Status</label>
+                <select asp-for="@status" asp-items="@ViewBag.Status" name="CodigoStatus" class="form-control"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -99,6 +101,10 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@if (ViewBag.Message != null)
+{
+    <span>@ViewBag.Message</span>
+}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

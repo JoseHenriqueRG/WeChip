@@ -49,9 +49,13 @@
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
-                <a asp-action="Create" asp-route-id="@item.ID">Ofertar</a>
+                <a asp-action="Create" asp-controller="Ofertas" asp-route-id="@item.ID">Ofertar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+@if (TempData.Keys.Contains("Message")) 
+{ 
+    <span>@TempData["Message"]</span>
+}

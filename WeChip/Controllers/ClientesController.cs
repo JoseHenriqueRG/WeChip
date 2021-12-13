@@ -19,17 +19,22 @@ namespace WeChip.Controllers
             _context = context;
         }
 
-        // GET: Ofertas
+        // GET: Cliestes
         public async Task<IActionResult> Index(string filtro)
         {
+            if (TempData.Keys.Contains("Message"))
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
             var clientes = from c in _context.Cliente
                            where c.Status.FinalizaCliente == false
-                         select c;
+                           select c;
 
             if (!String.IsNullOrEmpty(filtro))
             {
-                clientes = clientes.Where(c => c.Nome!.Contains(filtro));
-            }
+                clientes = clientes.Where(c => c.Nome!.Contains(filtro) || c.Cpf.Contains(filtro));
+            }             
 
             return View(await clientes.Include(c => c.Status).Take(50).ToListAsync());
         }
@@ -48,18 +53,13 @@ namespace WeChip.Controllers
         public async Task<IActionResult> Create([Bind("ID,Nome,Cpf,Credito,Telefone")] Cliente cliente)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 cliente.Status = _context.Status.Where(s => s.Descricao == "Nome Disponível").FirstOrDefault();
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
-        }
-
-        private bool ClienteExists(int id)
-        {
-            return _context.Cliente.Any(e => e.ID == id);
         }
     }
 }

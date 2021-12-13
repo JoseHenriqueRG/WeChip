@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {}
+    "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {
+    "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
+        "projectUniqueName": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
         "projectName": "WeChip",
-        "projectPath": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
-        "packagesPath": "C:\\Users\\jose.gomes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\obj\\",
+        "projectPath": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
+        "packagesPath": "C:\\Users\\joseh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\jose.gomes\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\joseh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -44,6 +43,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.12, )"
@@ -81,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
