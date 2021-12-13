@@ -36,7 +36,7 @@ namespace WeChip.Controllers
                 clientes = clientes.Where(c => c.Nome!.Contains(filtro) || c.Cpf.Contains(filtro));
             }             
 
-            return View(await clientes.Include(c => c.Status).Take(50).ToListAsync());
+            return View(await clientes.Include(c => c.Status).Take(20).ToListAsync());
         }
 
         // GET: Clientes/Create
@@ -50,10 +50,11 @@ namespace WeChip.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nome,Cpf,Credito,Telefone")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Nome,Cpf,CreditoString,Telefone")] Cliente cliente)
         {
             if (ModelState.IsValid)
-            { 
+            {
+                cliente.Credito = Convert.ToDecimal(cliente.CreditoString);
                 cliente.Status = _context.Status.Where(s => s.Descricao == "Nome Disponível").FirstOrDefault();
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();

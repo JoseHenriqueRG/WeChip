@@ -1,24 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {}
+    "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {
+    "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
+        "projectUniqueName": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
         "projectName": "WeChip",
-        "projectPath": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
-        "packagesPath": "C:\\Users\\joseh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joseh\\Documents\\Workspace\\WeChip\\WeChip\\obj\\",
+        "projectPath": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\WeChip.csproj",
+        "packagesPath": "C:\\Users\\jose.gomes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jose.gomes\\Documents\\Workspace\\WeChip\\WeChip\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\joseh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\jose.gomes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -88,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

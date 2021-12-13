@@ -334,3 +334,5 @@ C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\ref\WeChip.dll
 C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.pdb
 C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.genruntimeconfig.cache
 C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.csproj.AssemblyReference.cache
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.csprojAssemblyReference.cache

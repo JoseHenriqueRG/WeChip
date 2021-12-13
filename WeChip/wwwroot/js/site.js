@@ -3,6 +3,16 @@
 
 // Write your JavaScript code.
 
+$('.cpf').mask('000.000.000-00', { reverse: true });
+$('.phone').mask('(00) 90000-0000');
+$('.cep').mask('00000-000');
+$('.money').mask("#.##0,00", { reverse: true });
+
+var money = function (val) {
+    return val.replace(/\D/g, '').length === 5 ? '000,00' : '#.#00.000,00';
+}
+$('.money2').mask(money, { reverse: true });
+
 // Código disponibilizado no site https://viacep.com.br/
 
 $(document).ready(function () {

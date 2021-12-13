@@ -15,6 +15,11 @@ namespace WeChip.Models
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Preco { get; set; }
-        public string Tipo { get; set; }
+        public Tipo Tipo { get; set; }
+    }
+
+    public enum Tipo{
+        Hardware,
+        Software
     }
 }

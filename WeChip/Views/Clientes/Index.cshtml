@@ -4,18 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<form asp-controller="Clientes" asp-action="Index">
-    <p>
-        <input type="text" name="filtro" />
-        <input type="submit" value="Pesquisar" />
-    </p>
-</form>
-<table class="table">
+<div class="float-right">
+    <a asp-action="Create" class="btn btn-gray-dark">Cadastrar cliente</a>
+</div>
+<div class="row">
+    <div class="col-6">
+        <form asp-controller="Clientes" asp-action="Index" class="form-inline">
+            <label class="sr-only" for="filtro">Pesquisar cliente</label>
+            <input type="text" name="filtro" id="filtro" class="form-control mb-2 mr-sm-2" placeholder="Pesquisar cliente" />
+            <button class="btn btn-gray-dark mb-2" id="pesquisar">Pesquisar</button>
+        </form>
+    </div>
+</div>
+<h5 class="text-center mb-3 mt-3">Lista de clientes</h5>
+<table class="table table-hover text-center">
     <thead>
         <tr>
             <th>
@@ -34,28 +36,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cpf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Credito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone)
-            </td>
-            <td>
-                <a asp-action="Create" asp-controller="Ofertas" asp-route-id="@item.ID">Ofertar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cpf)
+                </td>
+                <td class="money2">
+                    @Html.DisplayFor(modelItem => item.Credito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    <a asp-action="Create" asp-controller="Ofertas" asp-route-id="@item.ID" class="btn btn-secondary">Ofertar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-@if (TempData.Keys.Contains("Message")) 
-{ 
+@if (TempData.Keys.Contains("Message"))
+{
     <span>@TempData["Message"]</span>
 }

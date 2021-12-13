@@ -3,10 +3,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Cliente</h4>
+<h4>Cadastro de cliente</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,28 +16,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control" />
+                <input asp-for="Cpf" class="form-control cpf" />
                 <span asp-validation-for="Cpf" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Credito" class="control-label"></label>
-                <input asp-for="Credito" class="form-control" step="0.01" type="number" value="0.00"/>
-                <span asp-validation-for="Credito" class="text-danger"></span>
+                <label asp-for="CreditoString" class="control-label"></label>
+                <input asp-for="CreditoString" class="form-control money" value="0,00"/>
+                <span asp-validation-for="CreditoString" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
+                <input asp-for="Telefone" class="form-control phone" />
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Cadastrar" class="btn btn-gray-dark" />
+
+                <div>
+                    <a asp-action="Index">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
