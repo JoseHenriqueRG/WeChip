@@ -22,8 +22,11 @@ namespace WeChip.Controllers
         // GET: Ofertas/Create
         public IActionResult Create(int id)
         {
-            if(TempData.Keys.Contains("Message"))
+            if (TempData.Keys.Contains("Message"))
+            {
                 ViewBag.Message = TempData["Message"];
+                ViewBag.Class = TempData["Class"];
+            }
 
             ViewBag.Cliente = _context.Cliente.Include(c => c.Status).FirstOrDefault(c => c.ID == id);
 
@@ -31,8 +34,8 @@ namespace WeChip.Controllers
                 _context.Produto.Select(p => 
                     new
                     {
-                        CodigoProduto = p.CodigoProduto,
-                        Descricao = "Descrição: " + p.Descricao + " | Preço: R$" + p.Preco + " | Tipo: " + p.Tipo
+                        p.CodigoProduto,
+                        Descricao = "Descrição: " + p.Descricao + " | Preço: R$" + p.Preco + " | Tipo: " + p.Tipo.ToString()
                     })
                 .ToList(), "CodigoProduto", "Descricao");
 
@@ -48,7 +51,7 @@ namespace WeChip.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Cliente,Cep,Rua,Numero,Complemento,Bairro,Cidade,Estado")] Oferta oferta, [Bind("CodigoStatus")] Status status, int[] produtos)
+        public async Task<IActionResult> Create([Bind("Cliente,Cep,Rua,Numero,Complemento,Bairro,Cidade,Estado")] Oferta oferta, [Bind("CodigoStatus")] Status status, int[] produtos)
         {
             if (ModelState.IsValid)
             {
@@ -56,13 +59,19 @@ namespace WeChip.Controllers
                 status = _context.Status.FirstOrDefault(s => s.CodigoStatus == status.CodigoStatus);
                 if (produtos.Length > 0)
                 {
-                    List<Produto> ListaProdutos = new();
+                    oferta.OfertaProdutos = new List<OfertaProdutos>();
                     var totalProd = 0.0M;
                     // Obter os produtos enviados no post e somar os valores
                     foreach (int item in produtos)
                     {
                         var produto = _context.Produto.FirstOrDefault(p => p.CodigoProduto == item);
-                        ListaProdutos.Add(produto);
+                        // Adicionar a lista de produtos e oferta para a OfertaProdutos
+                        oferta.OfertaProdutos.Add(
+                            new OfertaProdutos(){
+                                Produto = produto,
+                                Oferta = oferta
+                            }
+                        );
                         totalProd += produto.Preco;
                     }
 
@@ -71,11 +80,12 @@ namespace WeChip.Controllers
                     if (credito < totalProd)
                     {
                         TempData["Message"] = "Crédito insuficiente.";
+                        TempData["Class"] = "danger";
                         return RedirectToAction("Create", new { id = oferta.Cliente.ID });
                     }
 
                     // Contendo produto(s) do tipo Hardware o endereço precisa ser preenchido
-                    if ((ListaProdutos.Where(p => p.Tipo == 0).FirstOrDefault() != null) && (string.IsNullOrEmpty(oferta.Cep) || 
+                    if ((oferta.OfertaProdutos.Where(p => p.Produto.Tipo == 0).FirstOrDefault() != null) && (string.IsNullOrEmpty(oferta.Cep) || 
                         string.IsNullOrEmpty(oferta.Rua) || 
                         string.IsNullOrEmpty(oferta.Bairro) || 
                         string.IsNullOrEmpty(oferta.Cidade) || 
@@ -83,23 +93,24 @@ namespace WeChip.Controllers
                        oferta.Numero == null))
                     {
                         TempData["Message"] = "Preencha os campos de endereço.";
+                        TempData["Class"] = "danger";
                         return RedirectToAction("Create", new { id = oferta.Cliente.ID });
                     }
 
                     // Oferta realizada com sucesso Cliente.Status.ContabilizaVenda deve ser verdadeiro 
                     oferta.Cliente.Status = status.ContabilizaVenda != true ? _context.Status.First(s => s.ContabilizaVenda == true) : status;
 
-                    // Subtrair o crédito do cliente e informar o EF que ouve modificação nesse objeto
+                    // Subtrair o crédito do cliente
                     oferta.Cliente.Credito = credito - totalProd;
+                    // Contabiliza o valor Total da oferta
+                    oferta.ValorTotal = totalProd;
 
-                    // Adicionar a lista de produtos para a oferta
-                    oferta.Produtos = new List<Produto>();
-                    oferta.Produtos.AddRange(ListaProdutos);
                 }
                 else
                 {
                     // Sem produto a venda não é contabilizada
-                    oferta.Cliente.Status = status.ContabilizaVenda != false ? _context.Status.First(s => s.ContabilizaVenda == false) : status;
+                    oferta.Cliente.Status = status.ContabilizaVenda != false ? 
+                        _context.Status.First(s => s.ContabilizaVenda == false && s.FinalizaCliente == false) : status;
                 }
 
                 _context.Entry(oferta.Cliente).State = EntityState.Modified;
@@ -108,6 +119,7 @@ namespace WeChip.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Message"] = "Oferta salva com sucesso!";
+                TempData["Class"] = "success";
                 return RedirectToAction("Index", "Clientes");
             }
             return View(oferta);

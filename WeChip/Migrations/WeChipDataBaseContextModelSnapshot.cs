@@ -77,11 +77,29 @@ namespace WeChip.Migrations
                     b.Property<string>("Rua")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ClienteID");
 
                     b.ToTable("Oferta");
+                });
+
+            modelBuilder.Entity("WeChip.Models.OfertaProdutos", b =>
+                {
+                    b.Property<int>("OfertaID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProdutoID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("OfertaID", "ProdutoID");
+
+                    b.HasIndex("ProdutoID");
+
+                    b.ToTable("OfertaProdutos");
                 });
 
             modelBuilder.Entity("WeChip.Models.Produto", b =>
@@ -93,18 +111,13 @@ namespace WeChip.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("OfertaID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Tipo")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("CodigoProduto");
-
-                    b.HasIndex("OfertaID");
 
                     b.ToTable("Produto");
                 });
@@ -129,6 +142,23 @@ namespace WeChip.Migrations
                     b.ToTable("Status");
                 });
 
+            modelBuilder.Entity("WeChip.Models.Usuario", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Senha")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Usuario");
+                });
+
             modelBuilder.Entity("WeChip.Models.Cliente", b =>
                 {
                     b.HasOne("WeChip.Models.Status", "Status")
@@ -147,16 +177,33 @@ namespace WeChip.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("WeChip.Models.Produto", b =>
+            modelBuilder.Entity("WeChip.Models.OfertaProdutos", b =>
                 {
-                    b.HasOne("WeChip.Models.Oferta", null)
-                        .WithMany("Produtos")
-                        .HasForeignKey("OfertaID");
+                    b.HasOne("WeChip.Models.Oferta", "Oferta")
+                        .WithMany("OfertaProdutos")
+                        .HasForeignKey("OfertaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WeChip.Models.Produto", "Produto")
+                        .WithMany("OfertaProdutos")
+                        .HasForeignKey("ProdutoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Oferta");
+
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("WeChip.Models.Oferta", b =>
                 {
-                    b.Navigation("Produtos");
+                    b.Navigation("OfertaProdutos");
+                });
+
+            modelBuilder.Entity("WeChip.Models.Produto", b =>
+                {
+                    b.Navigation("OfertaProdutos");
                 });
 #pragma warning restore 612, 618
         }

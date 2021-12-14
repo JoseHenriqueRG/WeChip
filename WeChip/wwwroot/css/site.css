@@ -84,3 +84,15 @@ a.navbar-brand {
     background: #2f3c48 !important;
     color: white !important;
 }
+
+button.close {
+    font-size: 22px;
+    margin-left: 15px;
+}
+
+.alert.alert-danger, 
+.alert.alert-success {
+    position: fixed;
+    bottom: 2px;
+    right: 100px;
+}

@@ -16,6 +16,8 @@ namespace WeChip.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Preco { get; set; }
         public Tipo Tipo { get; set; }
+
+        public virtual ICollection<OfertaProdutos> OfertaProdutos { get; set; }
     }
 
     public enum Tipo{

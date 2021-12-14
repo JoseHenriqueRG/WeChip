@@ -14,7 +14,7 @@ namespace WeChip.Services
     {
         public static string Secret = "0a1b0df5b5e910992ebbd1d57a1290083a271075";
 
-        public static string GenerateToken(UsuarioApi usuarioApi)
+        public static string GenerateToken(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret);
@@ -22,10 +22,10 @@ namespace WeChip.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, usuarioApi.Usuario.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioApi.Senha.ToString())
+                    new Claim(ClaimTypes.Name, usuario.Login.ToString()),
+                    new Claim(ClaimTypes.Role, usuario.Senha.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddMinutes(20),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

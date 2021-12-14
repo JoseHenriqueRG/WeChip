@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WeChip.Models;
 
 namespace WeChip.Data
 {
@@ -17,5 +18,14 @@ namespace WeChip.Data
         
         public DbSet<WeChip.Models.Status> Status { get; set; }
 
+        public DbSet<WeChip.Models.Usuario> Usuario { get; set; }
+
+        public DbSet<WeChip.Models.OfertaProdutos> OfertaProdutos { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OfertaProdutos>()
+                .HasKey(op => new { op.OfertaID, op.ProdutoID });
+        }
     }
 }

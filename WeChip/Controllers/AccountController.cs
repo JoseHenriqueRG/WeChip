@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WeChip.Data;
 using WeChip.Models;
 using WeChip.Services;
 
@@ -13,26 +14,29 @@ namespace WeChip.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost]
-        public async Task<ActionResult<dynamic>> Login([FromBody] UsuarioApi usuarioApi)
-        {
-            // Recupera o usuário
-            var usuario = UsuarioApi.Get(usuarioApi.Usuario, usuarioApi.Senha);
+        private readonly WeChipDataBaseContext _context;
 
-            // Verifica se o usuário existe
-            if (usuario == null)
+        public AccountController(WeChipDataBaseContext context)
+        {
+            _context = context;
+        }
+
+        [HttpPost]
+        public ActionResult<dynamic> Login([FromBody] Usuario usuario)
+        {
+            // Recuperar o usuário
+            var user = _context.Usuario.FirstOrDefault(u => u.Login == usuario.Login && u.Senha == usuario.Senha);
+
+            // Verificar se o usuário existe
+            if (user == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
-            // Gera o Token
-            var token = TokenService.GenerateToken(usuario);
+            // Gerar o Token
+            var token = TokenService.GenerateToken(user);
 
-            // Oculta a senha
-            usuario.Senha = "";
-
-            // Retorna os dados
+            // Retornar o token
             return new
             {
-                usuario = usuario,
                 token = token
             };
         }

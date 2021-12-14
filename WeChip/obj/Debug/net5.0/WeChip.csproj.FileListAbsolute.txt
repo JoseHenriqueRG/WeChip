@@ -335,4 +335,15 @@ C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.pdb
 C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.genruntimeconfig.cache
 C:\Users\joseh\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.csproj.AssemblyReference.cache
 C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\WeChip.StaticWebAssets.xml
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\jose.gomes\Documents\Workspace\WeChip\WeChip\obj\Debug\net5.0\WeChip.csprojAssemblyReference.cache

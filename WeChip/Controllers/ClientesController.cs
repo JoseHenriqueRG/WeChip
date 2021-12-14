@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WeChip.Data;
 using WeChip.Models;
 
@@ -23,9 +21,7 @@ namespace WeChip.Controllers
         public async Task<IActionResult> Index(string filtro)
         {
             if (TempData.Keys.Contains("Message"))
-            {
                 ViewBag.Message = TempData["Message"];
-            }
 
             var clientes = from c in _context.Cliente
                            where c.Status.FinalizaCliente == false
@@ -33,8 +29,9 @@ namespace WeChip.Controllers
 
             if (!String.IsNullOrEmpty(filtro))
             {
-                clientes = clientes.Where(c => c.Nome!.Contains(filtro) || c.Cpf.Contains(filtro));
-            }             
+                filtro = filtro.Replace(".", "").Replace("-", "");
+                clientes = clientes.Where(c => c.Nome.Contains(filtro) || c.Cpf.Contains(filtro));
+            }
 
             return View(await clientes.Include(c => c.Status).Take(20).ToListAsync());
         }
@@ -42,6 +39,9 @@ namespace WeChip.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            if (TempData.Keys.Contains("Message"))
+                ViewBag.Message = TempData["Message"];
+            
             return View();
         }
 
@@ -54,12 +54,17 @@ namespace WeChip.Controllers
         {
             if (ModelState.IsValid)
             {
+                cliente.Cpf = cliente.Cpf.Replace(".", "").Replace("-", "");
                 cliente.Credito = Convert.ToDecimal(cliente.CreditoString);
                 cliente.Status = _context.Status.Where(s => s.Descricao == "Nome Disponível").FirstOrDefault();
+                
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
+
+                TempData["Message"] = "Cliente salvo com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["Message"] = "Ocorreu um erro inesperado. Tente novamente mais tarde.";
             return View(cliente);
         }
     }

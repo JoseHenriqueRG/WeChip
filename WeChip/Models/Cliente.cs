@@ -10,6 +10,8 @@ namespace WeChip.Models
         public string Nome { get; set; }
         [Required(ErrorMessage = "Cpf é obrigatório")]
         public string Cpf { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Credito { get; set; }
         [NotMapped]
         [DataType(DataType.Currency)]

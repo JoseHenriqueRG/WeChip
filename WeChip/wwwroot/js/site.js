@@ -40,12 +40,6 @@ $(document).ready(function () {
             //Valida o formato do CEP.
             if (validacep.test(cep)) {
 
-                //Preenche os campos com "..." enquanto consulta webservice.
-                $("#Rua").val("...");
-                $("#Bairro").val("...");
-                $("#Cidade").val("...");
-                $("#Estado").val("...");
-
                 //Consulta o webservice viacep.com.br/
                 $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
 

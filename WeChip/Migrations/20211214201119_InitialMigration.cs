@@ -2,10 +2,25 @@
 
 namespace WeChip.Migrations
 {
-    public partial class migracao1 : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Produto",
+                columns: table => new
+                {
+                    CodigoProduto = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Tipo = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produto", x => x.CodigoProduto);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Status",
                 columns: table => new
@@ -19,6 +34,20 @@ namespace WeChip.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Status", x => x.CodigoStatus);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuario",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Login = table.Column<string>(type: "TEXT", nullable: true),
+                    Senha = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuario", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +86,8 @@ namespace WeChip.Migrations
                     Complemento = table.Column<string>(type: "TEXT", nullable: true),
                     Bairro = table.Column<string>(type: "TEXT", nullable: true),
                     Cidade = table.Column<string>(type: "TEXT", nullable: true),
-                    Estado = table.Column<string>(type: "TEXT", nullable: true)
+                    Estado = table.Column<string>(type: "TEXT", nullable: true),
+                    ValorTotal = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,25 +101,27 @@ namespace WeChip.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Produto",
+                name: "OfertaProdutos",
                 columns: table => new
                 {
-                    CodigoProduto = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
-                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Tipo = table.Column<string>(type: "TEXT", nullable: true),
-                    OfertaID = table.Column<int>(type: "INTEGER", nullable: true)
+                    OfertaID = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProdutoID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Produto", x => x.CodigoProduto);
+                    table.PrimaryKey("PK_OfertaProdutos", x => new { x.OfertaID, x.ProdutoID });
                     table.ForeignKey(
-                        name: "FK_Produto_Oferta_OfertaID",
+                        name: "FK_OfertaProdutos_Oferta_OfertaID",
                         column: x => x.OfertaID,
                         principalTable: "Oferta",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OfertaProdutos_Produto_ProdutoID",
+                        column: x => x.ProdutoID,
+                        principalTable: "Produto",
+                        principalColumn: "CodigoProduto",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -103,18 +135,24 @@ namespace WeChip.Migrations
                 column: "ClienteID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produto_OfertaID",
-                table: "Produto",
-                column: "OfertaID");
+                name: "IX_OfertaProdutos_ProdutoID",
+                table: "OfertaProdutos",
+                column: "ProdutoID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Produto");
+                name: "OfertaProdutos");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Oferta");
+
+            migrationBuilder.DropTable(
+                name: "Produto");
 
             migrationBuilder.DropTable(
                 name: "Cliente");
